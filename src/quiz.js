@@ -40,4 +40,17 @@ class Quiz {
       return false;
     }
   }
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty === 0 || difficulty >= 4 || typeof difficulty === "string") {
+      return this.questions;
+    }
+    this.questions = this.questions.filter(
+      (question) => question.difficulty === difficulty
+    );
+    return this.questions;
+    /*const filteredDiff = this.questions.filter(
+      (difficulty) => this.difficulty < 3
+    );*/
+  }
+  averageDifficulty() {}
 }
