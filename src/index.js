@@ -98,19 +98,20 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-
+    questionContainer.innerText = question.text;
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
-
+    // progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    // let questionPercentage = (counterQuestion / questions.length) * 100;
+    progressBar.style.width = `${((quiz.currentQuestionIndex)/ questions.length) * 100}%`
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${questions.length}`; //  This value is hardcoded as a placeholder
 
 
     
@@ -118,6 +119,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Loop through the current question `choices`.
       // For each choice create a new radio input with a label, and append it to the choice container.
       // Each choice should be displayed as a radio input element with a label:
+      let aChoice = document.createElement("div");
+      question.choices.forEach((choose) => {
+        aChoice.innerHTML += `<input type="radio" name="choice" value="${choose}">
+        <label>${choose}</label><br>`;
+        choiceContainer.appendChild(aChoice);
+      });
       /* 
           <input type="radio" name="choice" value="CHOICE TEXT HERE">
           <label>CHOICE TEXT HERE</label>
