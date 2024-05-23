@@ -64,14 +64,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
-  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
   // Show first question
   showQuestion();
 
   /************  TIMER  ************/
-
   let timer;
+  function startTimer() {
+    quiz.timeRemaining = quizDuration;
+    timer = setInterval(() => {
+      if (quiz.timeRemaining > 0) {
+        quiz.timeRemaining--;
+        // Converting the time remaining
+        const minutes = Math.floor(quiz.timeRemaining / 60)
+          .toString()
+          .padStart(2, "0");
+        const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+        timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+      } else {
+        clearInterval(timer);
+        showResults();
+      }
+    }, 1000);
+  }
+  startTimer();
 
   /************  EVENT LISTENERS  ************/
 
@@ -127,8 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Each choice should be displayed as a radio input element with a label:
     let aChoice = document.createElement("div");
     question.choices.forEach((choose) => {
-      aChoice.innerHTML += `<input type="radio" name="choice" value="${choose}">
-        <label>${choose}</label><br>`;
+      aChoice.innerHTML += `
+        <label><input type="radio" name="choice" value="${choose}">${choose}</label><br>`;
       choiceContainer.appendChild(aChoice);
     });
     /* 
@@ -148,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-    const allChoices = document.querySelectorAll("input");
+    const allChoices = document.querySelectorAll(`input[name="choice"]`);
 
     // 2. Loop through all the choice elements and check which one is selected
     // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
