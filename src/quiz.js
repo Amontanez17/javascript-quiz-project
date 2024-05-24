@@ -30,7 +30,9 @@ class Quiz {
   }
   // 5. checkAnswer(answer)
   checkAnswer(answer) {
-    return this.correctAnswers++;
+    if (this.questions[this.currentQuestionIndex].answer === answer) {
+      return this.correctAnswers++;
+    }
   }
   // 6. hasEnded()
   hasEnded() {

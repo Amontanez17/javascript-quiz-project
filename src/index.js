@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showQuestion() {
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
+      clearInterval(timer);
       showResults();
       return;
     }
@@ -128,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
     // let questionPercentage = (counterQuestion / questions.length) * 100;
     progressBar.style.width = `${
-      (quiz.currentQuestionIndex / questions.length) * 100
+      ((quiz.currentQuestionIndex + 1) / questions.length) * 100
     }%`;
 
     // 3. Update the question count text
@@ -205,6 +206,9 @@ document.addEventListener("DOMContentLoaded", () => {
       quiz.correctAnswers = 0;
       quiz.shuffleQuestions();
       showQuestion();
+      timeRemainingContainer.innerText = `02:00`;
+      clearInterval(timer);
+      startTimer();
     });
   }
 });
